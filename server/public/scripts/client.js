@@ -2,29 +2,21 @@ console.log('js working');
 $(document).ready(function () {
 	console.log('JQ');
 	// Establish Click Listeners
-	setupClickListeners();
-	// load existing koalas on page load
-	getKoalas();
-	$(document).on('click', '#transferBtn', updateKoala);
-	$(document).on('click', '#deleteBtn', deleteKoala);
+	clickListeners();
+	getTasks();
+	// $(document).on('click', '#transferBtn', updateTask);
+	$(document).on('click', '#deleteBtn', deleteTask);
 }); // end doc ready
 
-function setupClickListeners() {
+function clickListeners() {
 	$('#addTaskBtn').on('click', function () {
-		// Nate - changed class to #addKoalaBtn
 		console.log('in addTaskBtn on click');
-		// get user input and put in an object
-		// NOT WORKING YET :(
-		// using a test object
-		//change
 		let taskToSend = {
 			name: $('#nameInput').val(),
-			age: $('#descInput').val(),
-			readyForTransfer: $('#transferInput').val(),
-			notes: $('#notesInput').val(),
+			description: $('#descInput').val(),
+			done: $('#boolInput').val(),
 		};
-		// call saveKoala with the new obejct
-		console.log('koala to send', taskToSend);
+		console.log('task to send', taskToSend);
 		$.ajax({
 			url: '/tasks',
 			method: 'POST',
@@ -36,14 +28,14 @@ function setupClickListeners() {
 			})
 			.catch(function (error) {
 				console.log(error);
-				alert('Error in koalaToSend');
+				alert('Error in taskToSend');
 			});
-		console.log('end of koalaToSend');
+		console.log('end of taskToSend');
 	});
 }
 
 function getTasks() {
-	console.log('in getKoalas');
+	console.log('in getTasks');
 
 	$.ajax({
 		url: '/tasks',
@@ -51,7 +43,7 @@ function getTasks() {
 	})
 		.then(function (response) {
 			console.log('test GET response,', response);
-			renderKoala(response);
+			renderTask(response);
 		})
 		.catch(function (error) {
 			console.log(error);
@@ -59,10 +51,10 @@ function getTasks() {
 		});
 	console.log('end of getTasks');
 
-	// ajax call to server to get koalas
-} // end getKoalas
+	// ajax call to server to get task
+} // end getTasks
 
-function renderKoala(tasks) {
+function renderTask(tasks) {
 	// changed to render koalas
 	console.log('in renderTasks', tasks);
 	// ajax call to server to get koalas --  ignore this line
@@ -72,9 +64,9 @@ function renderKoala(tasks) {
 		$('#taskInfo').append(`
     <tr>
     <td>${task.name}</td>
-    <td>${task.age}</td>
+    <td>${task.description}</td>
     <td>${task.done}</td>
-    <td><button data-id="${task.id}" id="transferBtn">Transfer</button></td>
+    <td><button data-id="${task.id}" id="transferBtn">Complete</button></td>
     <td><button data-id="${task.id}" id="deleteBtn">Delete</button></td>
     </tr>
     `);
@@ -82,7 +74,7 @@ function renderKoala(tasks) {
 	$('input').val('');
 }
 
-function deleteKoala() {
+function deleteTask() {
 	let taskId = $(this).data('id');
 	$.ajax({
 		type: 'DELETE',
@@ -97,17 +89,17 @@ function deleteKoala() {
 		});
 }
 
-function updateKoala() {
-	let taskId = $(this).data('id');
-	$.ajax({
-		type: 'PUT',
-		url: `/tasks/${taskId}`,
-	})
-		.then(function (response) {
-			console.log('its UPDATED');
-			getTasks();
-		})
-		.catch(function (error) {
-			alert('Error UPDATED Daddy O', error);
-		});
-}
+// function updateTask() {
+// 	let taskId = $(this).data('id');
+// 	$.ajax({
+// 		type: 'PUT',
+// 		url: `/tasks/${taskId}`,
+// 	})
+// 		.then(function (response) {
+// 			console.log('its UPDATED');
+// 			getTasks();
+// 		})
+// 		.catch(function (error) {
+// 			alert('Error UPDATED Daddy O', error);
+// 		});
+// }

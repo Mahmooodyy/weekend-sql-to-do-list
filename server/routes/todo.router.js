@@ -19,51 +19,38 @@ router.get('/', (req, res) => {
 });
 
 // // POST
-// router.post('/', (req, res) => {
-//     const newKoala = req.body;
-//     const queryText = `
-//         INSERT INTO "koalas" ("name", "gender", "age", "ready_to_transfer", "notes")
-//         VALUES ($1, $2, $3, $4, $5);
-//     `;
-//     pool.query(queryText, [newKoala.name, newKoala.gender, newKoala.age, newKoala.readyForTransfer, newKoala.notes])
-//     .then((result)=>{
-//         res.sendStatus(201);
-//     }).catch((error)=>{
-//         console.log('AY! error posting to db', error);
-//         res.sendStatus(500)
-//     })
-// });
+router.post('/', (req, res) => {
+    const newTask = req.body;
+    const queryText = `
+        INSERT INTO "todo" ("name", "description")
+        VALUES ($1, $2);
+    `;
+    pool.query(queryText, [newTask.name, newTask.description])
+    .then((result)=>{
+        res.sendStatus(201);
+    }).catch((error)=>{
+        console.log('AY! error posting to db', error);
+        res.sendStatus(500)
+    })
+});
 
-// // PUT
-// router.put('/:id', (req, res) => {
-//     let koalaId = req.params.id;
-//     console.log(koalaId);
-//     let queryText = 'UPDATE "koalas" SET "ready_to_transfer" = TRUE WHERE "id" = $1;';
+// PUT
 
-//     pool.query(queryText, [koalaId])
-//     .then((dbResponse)=>{
-//         res.send(dbResponse.rows)
-//     })
-//     .catch((error)=>{
-//         console.log(`AY! error updating with query ${queryText}: ${error}`);
-//         res.sendStatus(500);
-//     })
-// })
 
 // // DELETE
-// router.delete('/:id', (req, res) => {
-//     let reqId = req.params.id
-//     console.log(`A delete request has been sent for ID ${reqId}`);
-//     let queryText = 'DELETE FROM "koalas" WHERE "id" = $1;';
-//     pool.query(queryText, [reqId])
-//         .then(() =>{
-//             console.log('koala deleted');
-//             res.sendStatus(200);
-//         })
-//         .catch((error) => {
-//             console.log(`AY! error deleting with query ${queryText}: ${error}`);
-//             res.sendStatus(500); // a good server always responds
-//         })
-// });
+router.delete('/:id', (req, res) => {
+    let reqId = req.params.id
+    console.log(`A delete request has been sent for ID ${reqId}`);
+    let queryText = 'DELETE FROM "todo" WHERE "id" = $1;';
+    pool.query(queryText, [reqId])
+        .then(() =>{
+            console.log('task deleted');
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log(`AY! error deleting with query ${queryText}: ${error}`);
+            res.sendStatus(500); // a good server always responds
+        })
+});
 
 module.exports = router;

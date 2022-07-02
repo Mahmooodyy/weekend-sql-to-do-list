@@ -1,8 +1,8 @@
-CREATE TABLE tasks (
+CREATE TABLE todo (
     "id" serial PRIMARY KEY,
-    "name" varchar(20) NOT NULL,
+    "name" varchar(80) NOT NULL,
     "description" varchar(120),
-    "done" boolean,
+    "done"  BOOLEAN DEFAULT FALSE
 );
 
 INSERT INTO todo (name, description, done) 
