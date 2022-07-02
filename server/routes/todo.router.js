@@ -35,7 +35,20 @@ router.post('/', (req, res) => {
 });
 
 // PUT
+router.put('/:id', (req, res) => {
+    let taskId = req.params.id;
+    console.log(taskId);
+    let queryText = 'UPDATE "todo" SET "done" = TRUE WHERE "id" = $1;';
 
+    pool.query(queryText, [taskId])
+    .then((dbResponse)=>{
+        res.send(dbResponse.rows)
+    })
+    .catch((error)=>{
+        console.log(`AY! error updating with query ${queryText}: ${error}`);
+        res.sendStatus(500);
+    })
+})
 
 // // DELETE
 router.delete('/:id', (req, res) => {
