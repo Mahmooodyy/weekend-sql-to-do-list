@@ -6,4 +6,4 @@ CREATE TABLE todo (
 );
 
 INSERT INTO todo (name, description, done) 
-VALUES ('Mow Lawn', 'Put gas in the mower make sure oil is full. start mowing.', false); 
+VALUES ('This is a task.', 'This is the tasks description.', false); 

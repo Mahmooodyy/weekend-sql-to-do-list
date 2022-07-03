@@ -61,7 +61,7 @@ function renderTask(tasks) {
             <td>${task.name}</td>
             <td>${task.description}</td>
             <td>Completed!</td>
-            <td>Nice Job!</td>
+            <td>This task has already been completed.</td>
             <td><button data-id="${task.id}" id="deleteBtn">Delete</button></td>
             </tr>
             `);
@@ -105,7 +105,7 @@ function updateTask() {
 		url: `/tasks/${taskId}`,
 	})
 		.then(function (response) {
-			console.log('its UPDATED');
+			console.log('its UPDAiTED');
 			getTasks();
 		})
 		.catch(function (error) {
