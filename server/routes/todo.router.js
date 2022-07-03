@@ -4,7 +4,6 @@ const pool = require('../modules/pool.js');
 //
 // DB CONNECTION
 
-
 // GET
 router.get('/', (req, res) => {
     let queryText = 'SELECT * FROM "todo" ORDER BY "id";';

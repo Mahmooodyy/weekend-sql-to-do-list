@@ -54,6 +54,7 @@ function getTasks() {
 function renderTask(tasks) {
 	console.log('in renderTasks', tasks);
 	$('#taskInfo').empty();
+
 	for (let task of tasks) {
         if (task.done === true) {
             $('#taskInfo').append(`
@@ -81,7 +82,6 @@ function renderTask(tasks) {
 	$('input').val('');
 }
 
-
 function deleteTask() {
 	let taskId = $(this).data('id');
 	$.ajax({
@@ -93,13 +93,12 @@ function deleteTask() {
 			getTasks();
 		})
 		.catch(function (error) {
-			alert('Error deleting Daddy O', error);
+			alert('Error deleting', error);
 		});
 }
 
 function updateTask() {
 	let taskId = $(this).data('id');
-    // $(this).parent().parent().css('background-color', 'green')
 	$.ajax({
 		type: 'PUT',
 		url: `/tasks/${taskId}`,
